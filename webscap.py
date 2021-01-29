@@ -2,6 +2,7 @@ import bs4
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 
+#Change the url for different genres
 my_url="https://www.goodreads.com/choiceawards/best-nonfiction-books-2020"
 uClient=uReq(my_url)
 page_html=uClient.read()
@@ -11,6 +12,7 @@ page_soup=soup(page_html,"html.parser")
 
 containers=page_soup.findAll("div",{"class":"inlineblock pollAnswer resultShown"})
 
+#change the fike name to obtain books categorised by their genre
 filename="non-fiction_genre.csv"
 f=open(filename,'w')
 headers="Votes, Title, Cover_Image\n"
