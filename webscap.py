@@ -2,7 +2,7 @@ import bs4
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 
-#Change the url for different genres
+#Change the url of GOOD READS for different genres
 my_url="https://www.goodreads.com/choiceawards/best-nonfiction-books-2020"
 uClient=uReq(my_url)
 page_html=uClient.read()
