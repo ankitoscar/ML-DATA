@@ -7,6 +7,9 @@ def extract(main_url,filename):
     uClient.close()
     main_soup = soup(main_html, "html.parser")
     cards = main_soup.findAll("div",{"class":"vU6FJ p63iDd"})
+    
+        
+    headers = "title, author, publisher, date_published, ratings, pages, isbn, language, genres,cover_Image\n"
     f = open(filename, "w")
 
     headers = "title, author, publisher, date_published, ratings, pages, isbn, language, genres\n"
@@ -47,11 +50,14 @@ def extract(main_url,filename):
             ratings = 0
         else:
             ratings = ratings[0].text
+   
+        
+        covers = book_soup.findAll("div",{"class":"hkhL9e"})
+        cover_image=covers[0].img['src']
 
-        try:
-            f.write(title.replace(",","|") + ',' + author.replace(",","|") + ',' + publisher.replace(",","|") + ',' + date_published.replace(",","|") + ',' + str(ratings) + ',' + pages + ',' + isbn + "," + language + ',' + genres.replace(",","|") + "\n")
-        except UnicodeEncodeError:
-            continue
+            f.write(title.replace(",","|") + ',' + author.replace(",","|") + ',' + publisher.replace(",","|") + ',' + date_published.replace(",","|") +
+                    ',' + str(ratings) + ',' + pages + ',' + isbn + "," + language + ',' +
+                    genres.replace(",","|") + ','+ cover_image+"\n")
 
     print(filename + " written on disk....")
 
