@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen as uReq
+import shortuuid
+import random
 
 def extract(main_url,filename):
     uClient = uReq(main_url)
@@ -7,14 +9,7 @@ def extract(main_url,filename):
     uClient.close()
     main_soup = soup(main_html, "html.parser")
     cards = main_soup.findAll("div",{"class":"vU6FJ p63iDd"})
-    
-        
-    headers = "title, author, publisher, date_published, ratings, pages, isbn, language, genres,cover_Image\n"
-    f = open(filename, "w")
-
-    headers = "title, author, publisher, date_published, ratings, pages, isbn, language, genres\n"
-
-    f.write(headers)
+    f = open(filename, "a")
 
     for card in cards:
         url = 'https://play.google.com' + card.a['href']
@@ -29,36 +24,45 @@ def extract(main_url,filename):
         title = title[0].span.text
 
         author = container[0].findAll("span",{"class":"ExjzWd"})
-        if len(author) == 0:
-            author = ''
-        elif type(author) == None:
-            author = ''
-        else:
+        try:
             author = author[0].a.text
+        except (AttributeError,IndexError):
+            author = ''
 
-        info = container[0].findAll("span",{"class":"htlgb"})
+        info = container[0].findAll("div",{"class":"hAyfc"})
 
-        publisher = info[0].text
-        date_published = info[1].text
-        pages = info[2].text
-        isbn = info[3].text
-        language = info[6].text
-        genres = info[7].text
+        details = {}
+
+        for i in range(len(info)):
+            x = info[i].findAll("div",{"class":"BgcNfc"})
+            y = info[i].findAll("span",{"class":"htlgb"})
+            details[x[0].text] = y[0].text
+        
+        try:
+            publisher = details['Publisher']
+        except KeyError:
+            publisher = ''
+        try:
+            isbn = details['ISBN']
+        except KeyError:
+            isbn = ''
+        try:
+            language = details['Language']
+        except KeyError:
+            language = ''
+        user_id = shortuuid.uuid()
+        no_of_exchanges = random.randrange(0,10)
 
         ratings = container[0].findAll("div",{"class":"BHMmbe"})
         if len(ratings) == 0:
             ratings = 0
         else:
             ratings = ratings[0].text
-   
-        
-        covers = book_soup.findAll("div",{"class":"hkhL9e"})
-        cover_image=covers[0].img['src']
 
-            f.write(title.replace(",","|") + ',' + author.replace(",","|") + ',' + publisher.replace(",","|") + ',' + date_published.replace(",","|") +
-                    ',' + str(ratings) + ',' + pages + ',' + isbn + "," + language + ',' +
-                    genres.replace(",","|") + ','+ cover_image+"\n")
+        try:
+            f.write(user_id + ',' + title.replace(",","|") + ',' + author.replace(",","|") + ',' + publisher.replace(",","|") + ',' + isbn + "," + language + ',' + str(no_of_exchanges) + ',' + str(ratings) + "\n")
+        except UnicodeEncodeError:
+            continue
 
-    print(filename + " written on disk....")
 
     f.close()
