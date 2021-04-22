@@ -100,7 +100,7 @@ dict = [
     'https://play.google.com/store/books/collection/cluster?clp=sgIuCiYKIHByb21vdGlvbl8xMDAwZjJjX3dvbWVuc19oaXN0b3J5EAcYASIECAUILA%3D%3D:S:ANO1ljIBMEM&gsr=CjGyAi4KJgogcHJvbW90aW9uXzEwMDBmMmNfd29tZW5zX2hpc3RvcnkQBxgBIgQIBQgs:S:ANO1ljJNgn0&hl=en&gl=US',
 ]
 
-headers = "user_id, title, author, publisher, isbn, language, no_of_exchanges, rating\n"
+headers = "user_id, title, author, publisher, isbn, language, no_of_exchanges, rating, genre\n"
 f = open('test.csv','w')
 f.write(headers)
 f.close()
