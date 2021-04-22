@@ -28,7 +28,6 @@ def extract(main_url,filename):
             author = author[0].a.text
         except (AttributeError,IndexError):
             author = ''
-
         info = container[0].findAll("div",{"class":"hAyfc"})
 
         details = {}
@@ -50,6 +49,8 @@ def extract(main_url,filename):
             language = details['Language']
         except KeyError:
             language = ''
+        genre = details['Genres'].partition("/")[0]
+        genre.replace(","," ")
         user_id = shortuuid.uuid()
         no_of_exchanges = random.randrange(0,10)
 
@@ -60,7 +61,7 @@ def extract(main_url,filename):
             ratings = ratings[0].text
 
         try:
-            f.write(user_id + ',' + title.replace(",","|") + ',' + author.replace(",","|") + ',' + publisher.replace(",","|") + ',' + isbn + "," + language + ',' + str(no_of_exchanges) + ',' + str(ratings) + "\n")
+            f.write(user_id + ',' + title.replace(",","|") + ',' + author.replace(",","|") + ',' + publisher.replace(",","|") + ',' + isbn + "," + language + ',' + str(no_of_exchanges) + ',' + str(ratings) + ',' + genre + "\n")
         except UnicodeEncodeError:
             continue
 
