@@ -1,4 +1,4 @@
-from play_books_scraper import extract
+from db_data import extract
 
 dict = [
         'https://play.google.com/store/books/collection/cluster?clp=sgIuCiYKIHByb21vdGlvbl8xMDAwNWViX3R4Yl9hY2NvdW50aW5nEAcYASIECAUILA%3D%3D:S:ANO1ljJ0fvQ&gsr=CjGyAi4KJgogcHJvbW90aW9uXzEwMDA1ZWJfdHhiX2FjY291bnRpbmcQBxgBIgQIBQgs:S:ANO1ljI2t4g&hl=en&gl=US',
@@ -100,10 +100,10 @@ dict = [
     'https://play.google.com/store/books/collection/cluster?clp=sgIuCiYKIHByb21vdGlvbl8xMDAwZjJjX3dvbWVuc19oaXN0b3J5EAcYASIECAUILA%3D%3D:S:ANO1ljIBMEM&gsr=CjGyAi4KJgogcHJvbW90aW9uXzEwMDBmMmNfd29tZW5zX2hpc3RvcnkQBxgBIgQIBQgs:S:ANO1ljJNgn0&hl=en&gl=US',
 ]
 
-headers = "user_id, title, author, publisher, isbn, language, no_of_exchanges, rating, genre\n"
+headers = "isbn,title,author,genre,language,image\n"
 f = open('test.csv','w')
 f.write(headers)
 f.close()
 
 for url in dict:
-     extract(url,'test.csv')
+     extract(url,'test1.csv')
