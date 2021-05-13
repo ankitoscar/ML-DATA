@@ -100,10 +100,10 @@ dict = [
     'https://play.google.com/store/books/collection/cluster?clp=sgIuCiYKIHByb21vdGlvbl8xMDAwZjJjX3dvbWVuc19oaXN0b3J5EAcYASIECAUILA%3D%3D:S:ANO1ljIBMEM&gsr=CjGyAi4KJgogcHJvbW90aW9uXzEwMDBmMmNfd29tZW5zX2hpc3RvcnkQBxgBIgQIBQgs:S:ANO1ljJNgn0&hl=en&gl=US',
 ]
 
-headers = "isbn,title,author,genre,language,image\n"
-f = open('test.csv','w')
+headers = "id,isbn,title,description,author,genre,language,image\n"
+f = open('test4.csv','w')
 f.write(headers)
 f.close()
 
 for url in dict:
-     extract(url,'test1.csv')
+     extract(url,'test4.csv')
